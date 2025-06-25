@@ -35,5 +35,5 @@ pool
 userRoutes(app);
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://192.168.1.3:${PORT}`);
+  console.log(`Server running on port:${PORT}`);
 });
