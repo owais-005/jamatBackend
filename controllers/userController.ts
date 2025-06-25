@@ -20,7 +20,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     );
 
     if (!users || users.length === 0) {
-      console.log("❌ User not found");
+      console.log(" User not found");
       res
         .status(400)
         .json({ status: 400, message: "Invalid Username or Password" });
@@ -53,7 +53,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     const isMatch = await bcrypt.compare(password, storedPassword);
     if (!isMatch) {
-      console.log("❌ Password does not match");
+      console.log(" Password does not match");
       res
         .status(400)
         .json({ status: 400, message: "Invalid Username or Password" });
@@ -103,7 +103,7 @@ export const registerMember = async (
       address,
     } = req.body;
 
-    // ⛔ Check for missing fields
+    //  Check for missing fields
     if (
       !zone ||
       !profession ||
@@ -122,7 +122,7 @@ export const registerMember = async (
       return;
     }
 
-    // ✅ Now get the uploaded image path
+    //  Now get the uploaded image path
     const imagePath = req.file?.path; // from multer
 
     if (!imagePath) {
@@ -156,7 +156,7 @@ export const registerMember = async (
 
     const [result]: any = await pool.query(query, values);
 
-    console.log("✅ Member added:", fullName, "📸 image saved at:", imagePath);
+    console.log(" Member added:", fullName, "📸 image saved at:", imagePath);
 
     res.status(201).json({
       message: "Member registered successfully",
@@ -167,7 +167,7 @@ export const registerMember = async (
       },
     });
   } catch (error) {
-    console.error("🔥 Error in registerMember:", error);
+    console.error(" Error in registerMember:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -192,7 +192,7 @@ export const registerMember = async (
 //       address,
 //     } = req.body;
 
-//     // ⛔ Check for missing fields
+//     //  Check for missing fields
 //     if (
 //       !zone || !profession || !mobileNumber || !fullName ||
 //       !fatherName || !email || !education || !dob || !district ||
@@ -201,7 +201,7 @@ export const registerMember = async (
 //        res.status(400).json({ message: "All fields are required." });
 //     }
 
-//     // ✅ Now get the uploaded image path
+//     //  Now get the uploaded image path
 //     const imagePath = req.file?.path; // from multer
 
 //     if (!imagePath) {
@@ -234,7 +234,7 @@ export const registerMember = async (
 
 //     const [result]: any = await pool.query(query, values);
 
-//     console.log("✅ Member added:", fullName, "📸 image saved at:", imagePath);
+//     console.log(" Member added:", fullName, "📸 image saved at:", imagePath);
 
 //     res.status(201).json({
 //       message: "Member registered successfully",
@@ -245,7 +245,7 @@ export const registerMember = async (
 //       },
 //     });
 //   } catch (error) {
-//     console.error("🔥 Error in registerMember:", error);
+//     console.error(" Error in registerMember:", error);
 //     res.status(500).json({ message: "Internal Server Error" });
 //   }
 // };
@@ -335,7 +335,7 @@ export const getMembers = async (
             image = `data:${mimeType};base64,${imageBuffer.toString("base64")}`;
           } catch (error) {
             console.error(
-              `⚠️ Error reading image for member ${member.id}:`,
+              ` Error reading image for member ${member.id}:`,
               error
             );
           }
@@ -362,7 +362,7 @@ export const getMembers = async (
 
     res.status(200).json(members);
   } catch (error) {
-    console.error("❌ Error fetching members:", error);
+    console.error(" Error fetching members:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -393,7 +393,7 @@ export const deleteMember = async (
 
     res.status(200).json(updatedMember[0]);
   } catch (error) {
-    console.error("❌ Error deleting member:", error);
+    console.error(" Error deleting member:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -510,7 +510,7 @@ export const updateMember = async (
 
     res.status(200).json(updatedMember[0]);
   } catch (error) {
-    console.error("❌ Error updating member:", error);
+    console.error(" Error updating member:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -583,7 +583,7 @@ export const getDistrict = async (
 
     res.status(200).json(rows);
   } catch (error) {
-    console.error("❌ Error getting district:", error);
+    console.error(" Error getting district:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -710,7 +710,7 @@ export const getZone = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json(rows);
   } catch (error) {
-    console.error("❌ Error getting Zone:", error);
+    console.error(" Error getting Zone:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -878,12 +878,12 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
 
     console.log({ a: req.file, b: req.files });
 
-    // ✅ Use uploaded image from multer
+    //  Use uploaded image from multer
     const imagePath = req.file?.path;
 
     console.log({ imagePath });
 
-    // 🔍 Check if event already exists
+    //  Check if event already exists
     const [existingEvent]: any = await pool.query(
       `SELECT * FROM tbl_event WHERE eventName = ?`,
       [eventName]
@@ -904,7 +904,7 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
       imagePath,
     });
 
-    // 🛑 Validate required fields
+    //  Validate required fields
     if (
       !eventName ||
       !date ||
@@ -920,7 +920,7 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // ✅ Insert new event
+    //  Insert new event
     const query = `
       INSERT INTO tbl_event (
         eventName, date, location, description, image,
@@ -946,7 +946,7 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
 
     const [result]: any = await pool.query(query, values);
 
-    // 🗓️ Get formatted event response
+    //  Get formatted event response
     const [getEvents]: any = await pool.query(
       `SELECT *, DATE_FORMAT(CONVERT_TZ(date, '+00:00', @@session.time_zone), '%Y-%m-%d') AS currentDate
        FROM tbl_event WHERE eventName = ?`,
@@ -955,7 +955,7 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).send({ ...getEvents[0] });
   } catch (error) {
-    console.error("🔥 Error adding event:", error);
+    console.error(" Error adding event:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -1026,7 +1026,7 @@ export const getEvent = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json(events);
   } catch (error) {
-    console.error("❌ Error fetching events:", error);
+    console.error(" Error fetching events:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -1051,7 +1051,7 @@ export const updateEvent = async (
       eventType,
     } = req.body;
 
-    const newImagePath = req.file?.path; // ✅ Get uploaded image path
+    const newImagePath = req.file?.path; //  Get uploaded image path
 
     if (
       !eventName ||
@@ -1131,7 +1131,7 @@ export const updateEvent = async (
 
     res.status(200).send({ ...updatedEvent[0] });
   } catch (error) {
-    console.error("❌ Error updating event:", error);
+    console.error(" Error updating event:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -1255,7 +1255,7 @@ export const getEventById = async (
         image = `data:${mimeType};base64,${imageBuffer.toString("base64")}`;
       }
     } catch (err) {
-      console.warn(`⚠️ Could not read image for event ID ${id}:`, err);
+      console.warn(` Could not read image for event ID ${id}:`, err);
     }
 
     res.status(200).send({
@@ -1263,7 +1263,7 @@ export const getEventById = async (
       image,
     });
   } catch (error) {
-    console.error("❌ Error fetching event detail:", error);
+    console.error(" Error fetching event detail:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -1275,7 +1275,7 @@ export const startEvent = async (
 ): Promise<void> => {
   try {
     const eventId = req.params.eventId;
-    console.log("📥 Event ID Received:", eventId);
+    console.log(" Event ID Received:", eventId);
 
     // Check if already started
     const [checkEvent]: any = await pool.query(
@@ -1324,7 +1324,7 @@ export const startEvent = async (
         image = `data:${mimeType};base64,${imageBuffer.toString("base64")}`;
       }
     } catch (imgErr) {
-      console.warn(`⚠️ Could not read image for event ID ${eventId}:`, imgErr);
+      console.warn(` Could not read image for event ID ${eventId}:`, imgErr);
     }
 
     res.status(200).json({
@@ -1332,7 +1332,7 @@ export const startEvent = async (
       image,
     });
   } catch (error) {
-    console.error("❌ Error starting event:", error);
+    console.error(" Error starting event:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -1407,7 +1407,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // ✅ Check if the member exists in tbl_members
+    //  Check if the member exists in tbl_members
     const [existingMember]: any = await pool.query(
       "SELECT * FROM tbl_members WHERE id = ?",
       [memberId]
@@ -1416,13 +1416,13 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
       res.status(404).json({ message: "Member not found!" });
       return;
     }
-    // ✅ Check if the member has already clocked in
+    //  Check if the member has already clocked in
     const [checkClockin]: any = await pool.query(
       "SELECT memberClockin, memberClockout FROM tbl_events_detail WHERE memberId = ? AND eventId = ?",
       [memberId, eventId]
     );
     console.log("Fetched Attendance:", checkClockin);
-    // ✅ If user has never clocked in, add them and set clock-in time
+    //  If user has never clocked in, add them and set clock-in time
     if (!checkClockin[0]) {
       await pool.query(
         `INSERT INTO tbl_events_detail (eventId, memberId, memberClockin, eventStatus)
@@ -1441,7 +1441,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     // ---------->
-    // ✅ If user already clocked in but not clocked out, proceed with clock-out
+    //  If user already clocked in but not clocked out, proceed with clock-out
     if (checkClockin[0].memberClockout === null) {
       await pool.query(
         `UPDATE tbl_events_detail
@@ -1449,7 +1449,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
   WHERE eventId = ? AND memberId = ?`,
         [eventId, memberId]
       );
-      // ✅ Re-fetch updated data
+      //  Re-fetch updated data
       const [updatedEvent]: any = await pool.query(
         "SELECT memberClockin, memberClockout FROM tbl_events_detail WHERE memberId = ? AND eventId = ?",
         [memberId, eventId]
@@ -1458,7 +1458,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
         res.status(400).json({ message: "Clock-out time update failed." });
         return;
       }
-      // ✅ Calculate Working Hours
+      //  Calculate Working Hours
       const [timeDiffResult]: any = await pool.query(
         `SELECT
   LPAD(TIMESTAMPDIFF(HOUR, memberClockin, memberClockout), 2, '0') AS Hours,
@@ -1471,7 +1471,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
         Hours: "0",
         Minutes: "00",
       };
-      // ✅ Format Hours & Minutes
+      //  Format Hours & Minutes
       let formattedWorkingHours = "";
       if (Hours !== "00" && Hours !== "0") {
         formattedWorkingHours += `${Hours} Hour${Hours !== "1" ? "s" : ""} `;
@@ -1485,7 +1485,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
         formattedWorkingHours = "0 Minutes"; // Default if both are 0
       }
       console.log(`Final Working Hours: ${formattedWorkingHours}`);
-      // ✅ Update `workingHours` field
+      //  Update `workingHours` field
       await pool.query(
         `UPDATE tbl_events_detail
   SET presentHours = ?
@@ -1500,7 +1500,7 @@ export const joinEvent = async (req: Request, res: Response): Promise<void> => {
       res.status(200).json(finalData);
       return;
     }
-    // ✅ If user has already clocked out, prevent re-clock-out
+    //  If user has already clocked out, prevent re-clock-out
     res.status(400).json({
       message: "You have already clocked out!",
     });
@@ -1542,7 +1542,7 @@ export const getJoinMembers = async (
     }
     res.status(200).json(query);
   } catch (error) {
-    console.error("❌ Error fetching joined members:", error);
+    console.error(" Error fetching joined members:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -1595,7 +1595,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // ✅ Fetch event start and end time
+    //  Fetch event start and end time
     const [checkEndTime]: any = await pool.query(
       `SELECT startTime, endTime FROM tbl_event WHERE id = ?`,
       [eventId]
@@ -1606,7 +1606,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // ✅ If endTime is NULL or default, update it
+    //  If endTime is NULL or default, update it
     if (!checkEndTime[0].endTime || checkEndTime[0].endTime === "00:00:00") {
       await pool.query(
         `UPDATE tbl_event SET endTime = CURRENT_TIMESTAMP WHERE id = ?`,
@@ -1614,7 +1614,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
       );
     }
 
-    // ✅ Calculate event duration
+    //  Calculate event duration
     const [timeDiffResult]: any = await pool.query(
       `SELECT 
           LPAD(TIMESTAMPDIFF(HOUR, startTime, endTime), 2, '0') AS Hours,
@@ -1635,25 +1635,25 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
     }`;
     if (!formattedWorkingHours) formattedWorkingHours = "0 Minutes";
 
-    // ✅ Update event present time
+    //  Update event present time
     await pool.query(`UPDATE tbl_event SET presentTime = ? WHERE id = ?`, [
       formattedWorkingHours.trim(),
       eventId,
     ]);
 
-    // ✅ Add end note to event
+    //  Add end note to event
     await pool.query(`UPDATE tbl_event SET endNote = ? WHERE id = ?`, [
       endNote,
       eventId,
     ]);
 
-    // ✅ Fetch all members who haven't clocked out yet
+    //  Fetch all members who haven't clocked out yet
     const [members]: any = await pool.query(
       `SELECT memberId FROM tbl_events_detail WHERE eventId = ? AND memberClockout IS NULL`,
       [eventId]
     );
 
-    // ✅ Loop through each member to clock them out and calculate working hours
+    //  Loop through each member to clock them out and calculate working hours
     for (const member of members) {
       const memberId = member.memberId;
 
@@ -1664,7 +1664,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
         [eventId, memberId]
       );
 
-      // ✅ Calculate individual working hours
+      //  Calculate individual working hours
       const [timeDiff]: any = await pool.query(
         `SELECT 
             LPAD(TIMESTAMPDIFF(HOUR, memberClockin, memberClockout), 2, '0') AS Hours,
@@ -1690,7 +1690,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
       }`;
       if (!memberFormattedHours) memberFormattedHours = "0 Minutes";
 
-      // ✅ Update presentHours for each member
+      //  Update presentHours for each member
       await pool.query(
         `UPDATE tbl_events_detail 
          SET presentHours = ?
@@ -1711,7 +1711,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
       `update tbl_members set joinStatus = 'Y' where joinStatus = 'N'`
     );
 
-    // ✅ Fetch final event details
+    //  Fetch final event details
     const [endedEvent]: any = await pool.query(
       `select m.* , ed.*, e.eventName, e.startTime
       from tbl_members m
@@ -1724,7 +1724,7 @@ export const endEvent = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json(endedEvent);
   } catch (error) {
-    console.error("❌ Error processing event end:", error);
+    console.error(" Error processing event end:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -1762,7 +1762,7 @@ export const getLeaveMembers = async (
 
     res.status(200).json(query);
   } catch (error) {
-    console.error("❌ Error fetching leave members:", error);
+    console.error(" Error fetching leave members:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -1799,7 +1799,7 @@ export const getEndMembers = async (
     }
     res.status(200).json(query);
   } catch (error) {
-    console.error("❌ Error fetching joined members:", error);
+    console.error(" Error fetching joined members:", error);
     res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -1925,7 +1925,7 @@ export const EventReport = async (
     const limitNum = parseInt(limit as string, 10);
     const offset = (pageNum - 1) * limitNum;
 
-    // 🧠 Helper to convert 'DD-MM-YYYY' ➡️ 'YYYY-MM-DD'
+    //  Helper to convert 'DD-MM-YYYY' ➡️ 'YYYY-MM-DD'
     const convertToMySQLDate = (dateStr: string): string => {
       const [dd, mm, yyyy] = dateStr.split("-");
       return `${yyyy}-${mm}-${dd}`;
