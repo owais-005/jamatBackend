@@ -21,12 +21,3 @@ export const authenticateToken = (req: AuthenticatedRequest, res: Response, next
         res.status(403).json({ status: 403, message: "Invalid Token" });
     }
 };
-
-// ✅ Fix: Ensure `next()` is called properly
-// export const isAdmin = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
-//     if (!req.user || req.user.role !== "admin") {
-//         res.status(403).json({ status: 403, message: "Access Denied. Admins Only." });
-//         return;
-//     }
-//     next(); 
-// };
